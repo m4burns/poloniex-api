@@ -105,11 +105,7 @@ class PushApi:
         return len(queue) + len(subscriptions) != 0
 
     def subscribe(self, topic, handler):
-        if topic in constants.CURRENCY_PAIRS:
-            handler = trades_wrapper(topic, handler)
-            self.wamp.subscribe(topic=topic, handler=handler)
-
-        elif topic is "trollbox":
+        if topic is "trollbox":
             handler = trollbox_wrapper(handler)
             self.wamp.subscribe(topic=topic, handler=handler)
 
@@ -117,12 +113,9 @@ class PushApi:
             handler = ticker_wrapper(handler)
             self.wamp.subscribe(topic=topic, handler=handler)
 
-        elif topic in constants.AVAILABLE_SUBSCRIPTIONS:
-            self.wamp.subscribe(topic=topic, handler=handler)
-
         else:
-            raise NotImplementedError("Topic not available")
-
+            handler = trades_wrapper(topic, handler)
+            self.wamp.subscribe(topic=topic, handler=handler)
 
 class PublicApi(BasePublicApi):
     def __init__(self, session):
