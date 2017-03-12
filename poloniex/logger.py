@@ -35,7 +35,7 @@ def wrap_logger(logger):
     return logger
 
 
-def getLogger(name, level=logging.DEBUG):
+def getLogger(name, level=logging.INFO):
     # create logger
     logger = logging.getLogger(name)
     logger = wrap_logger(logger)
