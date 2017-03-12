@@ -110,9 +110,7 @@ class BasePublicApi:
                 method = "get"
                 params = {
                     "command": command,
-                    "currencyPair": currency_pair,
-                    "start": start,
-                    "end": end
+                    "currencyPair": currency_pair
                 }
                 break
 
