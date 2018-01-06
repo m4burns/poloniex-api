@@ -1,3 +1,5 @@
 aoihttp
 pp-ez
 autobahn
+requests
+asyncio
