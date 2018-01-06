@@ -3,7 +3,7 @@ from datetime import timedelta
 
 import requests
 
-from poloniex.api.base import command_operator, BasePublicApi, BaseTradingApi
+from .base import command_operator, BasePublicApi, BaseTradingApi
 
 __author__ = 'andrew.shvv@gmail.com'
 
