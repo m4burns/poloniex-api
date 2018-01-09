@@ -1,11 +1,16 @@
+import sys,os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '...')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
 import inspect
 from datetime import datetime, timedelta
 
-from .. import constants
-from .base import command_operator, BasePublicApi, BaseTradingApi
-from ..error import PoloniexError
-from ..logger import getLogger
-from ..wamp.client import WAMPClient
+from poloniex import constants
+from poloniex.api.base import command_operator, BasePublicApi, BaseTradingApi
+from poloniex.error import PoloniexError
+from poloniex.logger import getLogger
+from poloniex.wamp.client import WAMPClient
 
 __author__ = "andrew.shvv@gmail.com"
 

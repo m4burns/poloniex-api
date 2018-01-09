@@ -1,9 +1,13 @@
+import sys,os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '...')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
 from datetime import datetime
 from datetime import timedelta
-
 import requests
 
-from .base import command_operator, BasePublicApi, BaseTradingApi
+from poloniex.api.base import command_operator, BasePublicApi, BaseTradingApi
 
 __author__ = 'andrew.shvv@gmail.com'
 

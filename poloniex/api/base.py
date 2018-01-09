@@ -1,13 +1,18 @@
+import sys,os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '...')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
 import hashlib
 import hmac
 import time
 import urllib
 from inspect import iscoroutinefunction
 
-from .. import constants
-from ..error import PoloniexError, AddressAlreadyExist
-from ..logger import getLogger
-from ..utils import switch
+from poloniex import constants
+from poloniex.error import PoloniexError, AddressAlreadyExist
+from poloniex.logger import getLogger
+from poloniex.utils import switch
 
 __author__ = "andrew.shvv@gmail.com"
 

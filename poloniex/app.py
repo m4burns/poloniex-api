@@ -1,12 +1,16 @@
+import sys,os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
 import asyncio
 import signal
 import sys
 
 import aiohttp
 
-from .api import async, sync
-from .error import PoloniexError
-from .logger import getLogger
+from poloniex.api import async, sync
+from poloniex.error import PoloniexError
+from poloniex.logger import getLogger
 
 __author__ = 'andrew.shvv@gmail.com'
 

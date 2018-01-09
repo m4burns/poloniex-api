@@ -1,10 +1,14 @@
-import random
+import sys,os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '...')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
+import random
 from autobahn.wamp import message
 from autobahn.wamp.role import DEFAULT_CLIENT_ROLES
 from autobahn.wamp.serializer import JsonSerializer
 
-from ..logger import getLogger
+from poloniex.logger import getLogger
 
 __author__ = 'andrew.shvv@gmail.com'
 
