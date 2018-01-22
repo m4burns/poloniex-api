@@ -7,7 +7,7 @@ import hashlib
 import hmac
 import time
 import urllib
-from inspect import iscoroutinefunction
+from inspect import signature, iscoroutinefunction
 
 from poloniex import constants
 from poloniex.error import PoloniexError, AddressAlreadyExist
@@ -19,9 +19,16 @@ __author__ = "andrew.shvv@gmail.com"
 logger = getLogger(__name__)
 
 
+def apply_defaults(func, *args, **kwargs):
+    kwargs = signature(func).bind_partial(*args, **kwargs)
+    kwargs.apply_defaults()
+    return dict(kwargs.arguments)
+
+
 def command_operator(func):
     if iscoroutinefunction(func):
         async def async_decorator(self, *args, **kwargs):
+            kwargs = apply_defaults(func, *args, **kwargs)
             method, params = self.get_params(func.__name__, **kwargs)
 
             if method == "post":
@@ -31,11 +38,12 @@ def command_operator(func):
             else:
                 raise PoloniexError("Not available method '{}'".format(method))
 
-            return self.response_handler(response)
+            return self.response_handler(response, command=func.__name__)
 
         return async_decorator
     else:
         def decorator(self, *args, **kwargs):
+            kwargs = apply_defaults(func, *args, **kwargs)
             method, params = self.get_params(func.__name__, **kwargs)
 
             if method == "post":
@@ -45,7 +53,7 @@ def command_operator(func):
             else:
                 raise PoloniexError("Not available method '{}'".format(method))
 
-            return self.response_handler(response)
+            return self.response_handler(response, command=func.__name__)
 
         return decorator
 
@@ -58,18 +66,16 @@ class BasePublicApi:
 
     def get_params(self, command, **kwargs):
         currency_pair = kwargs.get("currency_pair")
-        if currency_pair and currency_pair not in constants.CURRENCY_PAIRS + ["all"]:
-            raise PoloniexError("Currency pair '{}' not available.".format(currency_pair))
 
         depth = kwargs.get("depth")
 
         start = kwargs.get("start")
         if start:
-            start = time.mktime(start.timetuple())
+            start = start.timestamp()
 
         end = kwargs.get("end")
         if end:
-            end = time.mktime(end.timetuple())
+            end = end.timestamp()
 
         period = kwargs.get("period")
         if period and period not in constants.CHART_DATA_PERIODS:
@@ -162,18 +168,16 @@ class BaseTradingApi:
 
     def get_params(self, command, **kwargs):
         currency_pair = kwargs.get("currency_pair")
-        if currency_pair and currency_pair not in constants.CURRENCY_PAIRS + ["all"]:
-            raise PoloniexError("Currency pair '{}' not available.".format(currency_pair))
 
         currency = kwargs.get("currency")
 
         start = kwargs.get("start")
         if start:
-            start = time.mktime(start.timetuple()),
+            start = start.timestamp()
 
         end = kwargs.get("end")
         if end:
-            end = time.mktime(end.timetuple())
+            end = end.timestamp()
 
         rate = kwargs.get("rate")
         amount = kwargs.get("amount")
